@@ -6,7 +6,7 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd">
 	<description>Spring MVC Configuration</description>
 	<!-- 加载配置文件 -->
-	<!-- <context:property-placeholder ignore-unresolvable="true" location="classpath*:/application.properties"/> -->
+	<context:property-placeholder ignore-unresolvable="true" location="classpath*:/application.properties"/>
 	<!-- 使用Annotation自动注册Bean,只扫描@Controller -->
 	<context:component-scan base-package="com.sdw.soft" use-default-filters="false"><!-- base-package 如果多个，用“,”分隔 -->
 		<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
@@ -24,7 +24,7 @@
 					<bean class="com.sdw.soft.core.modules.mapper.JacksonMapper"></bean>
 				</property>
 			</bean>
-			<!-- 使用xml格式输出数据
+			<!-- 使用xml格式输出数据-->
 			<bean class="org.springframework.http.converter.xml.MarshallingHttpMessageConverter">
 				<constructor-arg>
 					<bean class="org.springframework.oxm.xstream.XStreamMarshaller">
@@ -39,7 +39,7 @@
 					</bean>
 				</constructor-arg>
 				<property name="supportedMediaTypes" value="application/xml"></property>
-			</bean> -->
+			</bean> 
 		</mvc:message-converters>
 		<!-- <mvc:argument-resolvers>
 			<bean class="com.sdw.soft.common.web.SecureModelAttributeMethodArgumentResolver">
