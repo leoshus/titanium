@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
 	xmlns:context="http://www.springframework.org/schema/context" xmlns:mvc="http://www.springframework.org/schema/mvc"
 	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
@@ -24,7 +25,7 @@
 					<bean class="com.sdw.soft.core.modules.mapper.JacksonMapper"></bean>
 				</property>
 			</bean>
-			<!-- 使用xml格式输出数据-->
+			<!-- 使用xml格式输出数据
 			<bean class="org.springframework.http.converter.xml.MarshallingHttpMessageConverter">
 				<constructor-arg>
 					<bean class="org.springframework.oxm.xstream.XStreamMarshaller">
@@ -39,7 +40,7 @@
 					</bean>
 				</constructor-arg>
 				<property name="supportedMediaTypes" value="application/xml"></property>
-			</bean> 
+			</bean> -->
 		</mvc:message-converters>
 		<!-- <mvc:argument-resolvers>
 			<bean class="com.sdw.soft.common.web.SecureModelAttributeMethodArgumentResolver">
@@ -47,20 +48,45 @@
 			</bean>
 		</mvc:argument-resolvers> -->
 	</mvc:annotation-driven>
-	
+	<!-- 内容协商管理器 -->
+	<!-- 1.检查路径扩展名eg:hello.json 2.检查请求参数 eg:format=json 3.检查请求头Accept Header-->
 	<bean id="contentNegotiationManager" class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean">
+		<!-- 扩展名MIMEType映射,hello.json ==> application/json -->
+		<property name="favorPathExtension" value="true"/>
+		<!-- 检查请求参数 XXX?format=json -->
+		<property name="favorParameter" value="true"/>
+		<property name="parameterName" value="format"/>
+		<!-- 是否忽略Accept Header -->
+		<property name="ignoreAcceptHeader" value="false"/>
+		<!-- 扩展名到MIMEType的映射 favorPathExtension,favorParameter为true时起作用-->
 		<property name="mediaTypes">
 			<map>
 				<entry key="xml" value="application/xml"/>
 				<entry key="json" value="application/json"/>
+				<entry key="html" value="text/html"/>
 			</map>
 		</property>
-		<property name="ignoreAcceptHeader" value="true"/>
-		<property name="favorPathExtension" value="true"/>
+		<!-- 默认contentType -->
+		<property name="defaultContentType" value="text/html"/>
 	</bean>
-	
+	<!-- 内容协商视图解析器；根据客户端的不同的请求决定不同的 view进行响应, 如 /blog/1.json /blog/1.xml -->
+	<bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver" p:order="0">
+		<!-- 内容协商管理器用于决定media type -->
+		<property name="contentNegotiationManager" ref="contentNegotiationManager"/>
+		<!-- 默认视图 放在解析链最后 -->
+		<property name="defaultViews">
+			<list>
+				<bean class="org.springframework.web.servlet.view.json.MappingJackson2JsonView"/>
+				<!-- <bean class="com.alibaba.fastjson.support.spring.FastJsonJsonView"/> -->
+				<!-- <bean class="org.springframework.web.servlet.view.xml.MarshallingView"/> -->
+				
+			</list>
+		</property>
+	</bean>
 	<!-- 视图文件解析配置 -->
-	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver" p:order="1">
+		<property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
+		<property name="contentType" value="text/html"/>
 		<property name="prefix" value="${web.pages.prefix}"/>
 		<property name="suffix" value="${web.pages.suffix}"/>		
 	</bean>
@@ -72,18 +98,6 @@
 	<!-- <mvc:interceptors>
 		<bean class="com.sdw.soft.modules.sys.interceptor.LogInterceptor"/>
 	</mvc:interceptors> -->
-	<!--支持Shiro对Controller的方法级AOP安全控制 begin 
-	<bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator" depends-on="lifecycleBeanPostProcessor">
-		<property name="proxyTargetClass" value="true" />
-	</bean>
-	<bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">  
-        <property name="exceptionMappings">  
-            <props>  
-                <prop key="org.apache.shiro.authz.UnauthorizedException">error/403</prop>
-            </props>  
-        </property>  
-    </bean>   -->
-	<!-- Shiro end -->
 	
 	<!-- 上传文件拦截，设置最大上传文件大小   10M=10*1024*1024(B)=10485760 bytes -->  
     <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">  
