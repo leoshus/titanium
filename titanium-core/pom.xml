@@ -259,5 +259,19 @@
 			<groupId>com.thoughtworks.xstream</groupId>
 			<artifactId>xstream</artifactId>
 		</dependency>
+		<!-- SOAP begin -->
+			<dependency>
+				<groupId>org.apache.cxf</groupId>
+				<artifactId>cxf-rt-core</artifactId>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.cxf</groupId>
+				<artifactId>cxf-rt-frontend-jaxws</artifactId>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.cxf</groupId>
+				<artifactId>cxf-rt-transports-http</artifactId>
+			</dependency>
+			<!-- SOAP end -->
 	</dependencies>
 </project>

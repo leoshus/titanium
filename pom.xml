@@ -36,6 +36,7 @@
 	<commons-fileupload.version>1.3</commons-fileupload.version>
 	<jackson.version>2.2.1</jackson.version>
 	<xstream.version>1.4.3</xstream.version>
+	<cxf.version>2.7.8</cxf.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
 	<!-- 设定除中央仓库(repo1.maven.org/maven2/)外的其他仓库,按设定顺序进行查找. -->
@@ -411,6 +412,59 @@
 			<artifactId>xstream</artifactId>
 			<version>${xstream.version}</version>
 		</dependency>
+		<!-- SOAP begin -->
+			<dependency>
+				<groupId>org.apache.cxf</groupId>
+				<artifactId>cxf-rt-core</artifactId>
+				<version>${cxf.version}</version>
+				<exclusions>
+					<!-- use javax.mail.mail instead -->
+					<exclusion>
+						<groupId>org.apache.geronimo.specs</groupId>
+						<artifactId>geronimo-javamail_1.4_spec</artifactId>
+					</exclusion>
+					<!-- use javax.activation.activation instead -->
+					<exclusion>
+						<groupId>org.apache.geronimo.specs</groupId>
+						<artifactId>geronimo-activation_1.1_spec</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.cxf</groupId>
+				<artifactId>cxf-rt-frontend-jaxws</artifactId>
+				<version>${cxf.version}</version>
+				<exclusions>
+					<!-- see above -->
+					<exclusion>
+						<groupId>org.apache.geronimo.specs</groupId>
+						<artifactId>geronimo-javamail_1.4_spec</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>org.apache.geronimo.specs</groupId>
+						<artifactId>geronimo-activation_1.1_spec</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.cxf</groupId>
+				<artifactId>cxf-rt-transports-http</artifactId>
+				<version>${cxf.version}</version>
+			</dependency>
+			<!-- SOAP end -->
+
+			<!-- JAX-RS begin -->
+			<dependency>
+				<groupId>org.apache.cxf</groupId>
+				<artifactId>cxf-rt-frontend-jaxrs</artifactId>
+				<version>${cxf.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.fasterxml.jackson.jaxrs</groupId>
+				<artifactId>jackson-jaxrs-json-provider</artifactId>
+				<version>2.1.1</version>
+			</dependency>
+			<!-- JAX-RS end -->
 		</dependencies>
 	</dependencyManagement>
   <build>
