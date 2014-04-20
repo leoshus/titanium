@@ -1,27 +1,54 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
-	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+	<property name="logdir" value="D:/log/titanium"></property>
+	<appender name="console" class="ch.qos.logback.core.ConsoleAppender">
 		<encoder>
-			<pattern>%d{HH:mm:ss.SSS} %-5level %logger{36}[%line] - %msg %mdc %n</pattern>
+			<pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
 		</encoder>
 	</appender>
 
-	<!-- 建议设置为WARN或更低级别，此Logger主要用于Struts显示以404错误代码返回的Could not find action or result信息，用于排除编码错误 -->
-	<logger name="org.apache.struts2.dispatcher" level="WARN" additivity="false">
-		<appender-ref ref="STDOUT" />
-	</logger>
-	<logger name="com.sdw.soft" level="DEBUG" additivity="false">
-		<appender-ref ref="STDOUT" />
-	</logger>
-	<logger name="jdbc.sqlonly" level="DEBUG" additivity="false">
-		<appender-ref ref="STDOUT" />
-	</logger>
-	<!-- 打印大量结果集对于运行效率影响较大,开发过程建议默认关闭,在遇到问题需要分析问题是可设置为DEBUG -->
-	<logger name="jdbc.resultsettable" level="WARN" additivity="false">
-		<appender-ref ref="STDOUT" />
-	</logger>
+	<appender name="rollingFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${logdir}/showcase.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${logdir}/titanium.log.%d{yyyy-MM-dd}.log</fileNamePattern>
+		</rollingPolicy>
+		<encoder>
+			<pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+		</encoder>
+	</appender>
 
+	<appender name="businessLogFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${logdir}/business.log</file>
+		<!-- 按每小时滚动文件，如果一个小时内达到10M也会滚动文件, 滚动文件将会压缩成zip格式 -->
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${logdir}/titanium-%d{yyyy-MM-dd_HH}.%i.zip</fileNamePattern>
+			<timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+				<maxFileSize>10MB</maxFileSize>
+			</timeBasedFileNamingAndTriggeringPolicy>
+		</rollingPolicy>
+		<!-- 独立的pattern -->
+		<encoder>
+			<pattern>%d{HH:mm:ss.SSS},%msg%n</pattern>
+		</encoder>
+	</appender>
+
+	<!-- project default level -->
+	<logger name="com.sdw.soft" level="DEBUG" />
+
+	<!-- business log 使用独立的appender，不继承Root的appender -->
+	<!-- <logger name="business" level="INFO" additivity="false">
+		<appender-ref ref="businessLogFile" />
+	</logger> -->
+
+	<!--log4jdbc -->
+	<logger name="jdbc.sqltiming" level="INFO"/>
+
+	<!-- cxf inbound/outbound logger -->
+	<!-- <logger name="org.apache.cxf.services" level="INFO" /> -->
+
+	<!-- root -->
 	<root level="WARN">
-		<appender-ref ref="STDOUT" />
+		<appender-ref ref="console" />
+		<appender-ref ref="rollingFile" />
 	</root>
-</configuration> 
+</configuration>
