@@ -19,6 +19,7 @@
   	<titanium.version>1.0.0</titanium.version>
   	<junit.version>4.11</junit.version>
   	<spring.version>3.2.4.RELEASE</spring.version>
+  	<springsecurity.version>3.1.4.RELEASE</springsecurity.version>
   	<spring-data-jpa.version>1.2.0.RELEASE</spring-data-jpa.version>
   	<hibernate.version>4.2.0.Final</hibernate.version>
   	<hibernate-validator.version>5.0.1.Final</hibernate-validator.version>
@@ -38,6 +39,9 @@
 	<jackson.version>2.2.1</jackson.version>
 	<xstream.version>1.4.3</xstream.version>
 	<cxf.version>2.7.8</cxf.version>
+	<joda.version>1.2</joda.version>
+	<joda.time.version>2.2</joda.time.version>
+	<joda.jackson.version>2.1.1</joda.jackson.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
 	<!-- 设定除中央仓库(repo1.maven.org/maven2/)外的其他仓库,按设定顺序进行查找. -->
@@ -159,6 +163,44 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
+		
+		<!-- spring-security -->
+			<dependency>
+				<groupId>org.springframework.security</groupId>
+				<artifactId>spring-security-web</artifactId>
+				<version>${springsecurity.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework.security</groupId>
+				<artifactId>spring-security-config</artifactId>
+				<version>${springsecurity.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework.security</groupId>
+				<artifactId>spring-security-cas</artifactId>
+				<version>${springsecurity.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.jasig.cas.client</groupId>
+				<artifactId>cas-client-core</artifactId>
+				<version>3.2.1</version>
+				<exclusions>
+					<exclusion>
+						<groupId>javax.servlet</groupId>
+						<artifactId>servlet-api</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+			<dependency>
+				<groupId>com.octo.captcha</groupId>
+				<artifactId>jcaptcha</artifactId>
+				<version>1.0</version>
+			</dependency>
+			<dependency>
+				<groupId>com.jhlabs</groupId>
+				<artifactId>filters</artifactId>
+				<version>2.0.235</version>
+			</dependency>
 		
 		<!-- WEB begin -->
 		<dependency>
@@ -471,6 +513,23 @@
 				<version>2.1.1</version>
 			</dependency>
 			<!-- JAX-RS end -->
+			<!-- joda -->
+			<dependency>
+				<groupId>joda-time</groupId>
+				<artifactId>joda-time</artifactId>
+				<version>${joda.time.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.joda</groupId>
+				<artifactId>joda-convert</artifactId>
+				<version>${joda.version}</version>
+			</dependency>
+			<!-- joda for jackson -->
+			<dependency>
+				<groupId>com.fasterxml.jackson.datatype</groupId>
+				<artifactId>jackson-datatype-joda</artifactId>
+				<version>${joda.jackson.version}</version>
+			</dependency>
 		</dependencies>
 	</dependencyManagement>
   <build>

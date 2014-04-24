@@ -23,31 +23,69 @@
 	<context:component-scan base-package="com.sdw.soft">
 		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
 	</context:component-scan>
-	<!-- 定义Hibernate Session工厂 -->
-	<bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
-		<property name="dataSource" ref="dataSource"/>
-		<property name="packagesToScan" value="com.sdw.soft"/>
-		<property name="hibernateProperties">
+	
+	
+	<!-- JPA Entity Manager 配置 -->
+	<bean id="entityManagerFactory"
+		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="jpaVendorAdapter">
+			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter" />
+		</property>
+		<property name="persistenceUnitPostProcessors" ref="persistenceUnitPostProcessors" />
+		<property name="packagesToScan" value="com.sdw.soft" />
+		<property name="jpaProperties">
 			<props>
-				<prop key="hibernate.cache.region.factory_class">org.hibernate.cache.ehcache.EhCacheRegionFactory</prop>
-				<!-- <prop key="net.sf.ehcache.configurationResourceName">${hibernate.ehcache.configFile}</prop> -->
-				<prop key="hibernate.cache.use_second_level_cache">true</prop>
+				<prop key="hibernate.connection.autocommit">false</prop>
+				<prop key="hibernate.ejb.naming_strategy">org.hibernate.cfg.ImprovedNamingStrategy</prop>
+				<prop key="hibernate.cache.region.factory_class">org.hibernate.cache.ehcache.EhCacheRegionFactory
+				</prop>
+				<prop key="net.sf.ehcache.configurationResourceName">ehcache-config.xml</prop>
+				<prop key="hibernate.hbm2ddl.auto">${hibernate.hbm2ddl.auto}</prop>
+
 				<prop key="hibernate.cache.use_query_cache">true</prop>
-				<prop key="hibernate.search.default.directory_provider">filesystem</prop>
-				<prop key="hibernate.search.default.indexBase">${hibernate.search.default.indexBase}</prop>
-				<prop key="hibernate.show_sql">${hibernate.show_sql}</prop>
+				<prop key="hibernate.cache.use_second_level_cache">true</prop>
+				<prop key="hibernate.generate_statistics">true</prop>
+
+				<!-- <prop key="javax.persistence.validation.mode">none</prop> <prop 
+					key="hibernate.validator.apply_to_ddl">false</prop> -->
+
+				<prop key="hibernate.connection.SetBigStringTryClob">true</prop>
+
+				<prop key="org.hibernate.envers.do_not_audit_optimistic_locking_field">false</prop>
+				<prop key="org.hibernate.envers.global_with_modified_flag">true</prop>
 			</props>
 		</property>
-		<property name="namingStrategy">
-			<bean class="org.hibernate.cfg.ImprovedNamingStrategy"/>
-		</property>
 	</bean>
-	<!-- 定义事务 -->
-	<bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
-		<property name="sessionFactory" ref="sessionFactory"/>
+
+	<bean id="persistenceUnitPostProcessors" class="com.sdw.soft.core.dao.jpa.ExtPersistenceUnitPostProcessor" />
+
+	<!-- Spring Data JPA配置 -->
+	<jpa:repositories base-package="com.sdw.soft"
+		transaction-manager-ref="transactionManager"
+		entity-manager-factory-ref="entityManagerFactory" />
+
+	<!-- JPA 事务配置 -->
+	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+		<property name="entityManagerFactory" ref="entityManagerFactory" />
+		<property name="dataSource" ref="dataSource" />
 	</bean>
-	<!-- 配置Annotation驱动，扫描@Transactional注解的类定义事务 -->
-	<tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true"/>
+
+	<!-- 使用annotation定义事务 -->
+	<tx:annotation-driven transaction-manager="transactionManager"
+		proxy-target-class="true" />
+
+	<!-- Spring Cache配置 
+	<cache:annotation-driven />
+	<bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheCacheManager">
+		<property name="cacheManager" ref="ehcache" />
+	</bean>
+	<bean id="ehcache"
+		class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
+		<property name="configLocation" value="classpath:ehcache-config.xml" />
+		<property name="shared" value="true" />
+	</bean>-->
+	
 	
 	<!-- 配置JSR303 Bean Validator定义-->
 	<bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean"/>

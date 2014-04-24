@@ -65,6 +65,31 @@
 			<groupId>org.springframework.data</groupId>
 			<artifactId>spring-data-jpa</artifactId>
 		</dependency>
+		<!-- Spring Security -->
+		<dependency>
+				<groupId>org.springframework.security</groupId>
+				<artifactId>spring-security-web</artifactId>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework.security</groupId>
+				<artifactId>spring-security-config</artifactId>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework.security</groupId>
+				<artifactId>spring-security-cas</artifactId>
+			</dependency>
+			<dependency>
+				<groupId>org.jasig.cas.client</groupId>
+				<artifactId>cas-client-core</artifactId>
+			</dependency>
+			<dependency>
+				<groupId>com.octo.captcha</groupId>
+				<artifactId>jcaptcha</artifactId>
+			</dependency>
+			<dependency>
+				<groupId>com.jhlabs</groupId>
+				<artifactId>filters</artifactId>
+			</dependency>
 
 		<!-- WEB begin -->
 		<dependency>
@@ -278,5 +303,19 @@
 				<artifactId>cxf-rt-transports-http</artifactId>
 			</dependency>
 			<!-- SOAP end -->
+			<!-- joda -->
+			<dependency>
+				<groupId>joda-time</groupId>
+				<artifactId>joda-time</artifactId>
+			</dependency>
+			<dependency>
+				<groupId>org.joda</groupId>
+				<artifactId>joda-convert</artifactId>
+			</dependency>
+			<!-- joda for jackson -->
+			<dependency>
+				<groupId>com.fasterxml.jackson.datatype</groupId>
+				<artifactId>jackson-datatype-joda</artifactId>
+			</dependency>
 	</dependencies>
 </project>

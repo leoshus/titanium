@@ -77,7 +77,24 @@
     <servlet-name>springServlet</servlet-name>
     <url-pattern>/</url-pattern><!-- 慎重使用"/*"可能导致dispatcher二次分发 -->
   </servlet-mapping>
-  
+  <!-- Spring Security -->
+	<filter>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+  <!-- Open Entity Manager in View filter -->
+	<filter>
+		<filter-name>openEntityManagerInViewFilter</filter-name>
+		<filter-class>org.springframework.orm.jpa.support.OpenEntityManagerInViewFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>openEntityManagerInViewFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
    <!-- DruidStatView -->
   <servlet>
     <servlet-name>DruidStatView</servlet-name>
