@@ -28,7 +28,10 @@
            </form>
     </div>
 
-    <div class="login-btn-set"><div class='rem'>记住我</div> <a href='javascript:void(0)' id="loginSubmit" class='login-btn'></a></div>
+    <div class="login-btn-set">
+    	<div class='rem'>记住我</div> <a href='javascript:void(0)' id="loginSubmit" class='login-btn'></a>
+    </div>
+    <div id="fortest"><a href="javascript:void(0)">admin测试入口</a></div>
     <p class='copyright'>版权所有 sdw2330976</p>
 </div>
 
@@ -37,8 +40,16 @@
 <script type="text/javascript">
 
 $(function(){
-	
+	//TODO ------------for developer start----------- 
+	$("#fortest").click(function(){
+		$("#signup_name").val("admin");
+		$("#signup_password").val("123");
+		$("#signup_form").submit();
+	});
+	//-------------------end----------------------
 	$("#loginSubmit").click(function(){
+		$("#signup_name").val("admin");
+		$("#signup_password").val("123");
 		$("#signup_form").submit();
 	});
 
