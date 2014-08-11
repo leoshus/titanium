@@ -10,11 +10,18 @@
 	$(document).ready(function(){
 		$.getJSON("${base}/hello/hello2.json",{},function(data){
 			alert(JSON.stringify(data));
+			
+			$.getJSON("${base}/hello/fetchContants.json",{},function(data){
+				$("#test").html(data.msg);
+			});
 		});
+		
 	});
 </script>
 </head>
 <body>
 	hello ! --- ${hello }
+	
+	<div id="test"></div>
 </body>
 </html>

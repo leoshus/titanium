@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.NamedThreadLocal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,12 +22,25 @@ public class HelloController {
 	public String hello(Model model){
 		String message = "";
 		try {
+			Constants.localConstants.set("test ThreadLocal constants");
+			System.out.println(">>>>>>>>>>>>>>>>>" + Constants.localConstants.get());
 			message = jaxWsProxy.invoke("123");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		model.addAttribute("hello", message);
 		return "hello";
+	}
+	/**
+	 * 俩次ajax请求 servlet容器会分配俩个线程  所以通过ThreadLocal变量无法在两次请求中进行通信
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping("/fetchContants")
+	public String fetchContants(Model model){
+		model.addAttribute("msg", Constants.localConstants.get());
+		System.out.println("============"+Constants.localConstants.get());
+		return null;
 	}
 	@RequestMapping(value="hello2")
 	public String helloJson(Model model){

@@ -11,6 +11,8 @@
 	<!-- 该路径下的资源不用过滤 -->
 	<http pattern="/jcaptcha" security="none" />
 	<http pattern="/pub/**" security="none" />
+	<http pattern="/hello/**" security="none" />
+	<http pattern="/tws/**" security="none" />
 	<http pattern="/static/**" security="none" />
 	<http pattern="/resources/**" security="none" />
 	<http pattern="/components/**" security="none" />
