@@ -13,7 +13,7 @@ import org.springframework.core.NamedThreadLocal;
  */
 public class Constants {
 	
-	public static NamedThreadLocal<String> localConstants = new NamedThreadLocal<String>("local constants");
+	public static final NamedThreadLocal<String> localConstants = new NamedThreadLocal<String>("local constants");
 	
 	public String getLocalConstants(){
 		return localConstants.get();

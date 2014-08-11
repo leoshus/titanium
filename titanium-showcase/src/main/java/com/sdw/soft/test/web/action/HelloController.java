@@ -3,6 +3,8 @@ package com.sdw.soft.test.web.action;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.NamedThreadLocal;
 import org.springframework.stereotype.Controller;
@@ -19,10 +21,11 @@ public class HelloController {
 	private IJaxWsProxy jaxWsProxy;
 	
 	@RequestMapping(value="hello")
-	public String hello(Model model){
+	public String hello(HttpServletRequest request,Model model){
 		String message = "";
 		try {
 			Constants.localConstants.set("test ThreadLocal constants");
+			request.getSession().setAttribute("msg", "test ThreadLocal constants");
 			System.out.println(">>>>>>>>>>>>>>>>>" + Constants.localConstants.get());
 			message = jaxWsProxy.invoke("123");
 		} catch (Exception e) {
@@ -37,9 +40,9 @@ public class HelloController {
 	 * @return
 	 */
 	@RequestMapping("/fetchContants")
-	public String fetchContants(Model model){
+	public String fetchContants(HttpServletRequest request,Model model){
 		model.addAttribute("msg", Constants.localConstants.get());
-		System.out.println("============"+Constants.localConstants.get());
+		System.out.println("============"+Constants.localConstants.get()+","+request.getSession().getAttribute("msg"));
 		return null;
 	}
 	@RequestMapping(value="hello2")
