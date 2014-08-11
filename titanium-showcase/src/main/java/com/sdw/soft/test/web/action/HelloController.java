@@ -41,7 +41,8 @@ public class HelloController {
 	 */
 	@RequestMapping("/fetchContants")
 	public String fetchContants(HttpServletRequest request,Model model){
-		model.addAttribute("msg", Constants.localConstants.get());
+//		model.addAttribute("msg", Constants.localConstants.get());
+		model.addAttribute("msg", request.getSession().getAttribute("msg"));
 		System.out.println("============"+Constants.localConstants.get()+","+request.getSession().getAttribute("msg"));
 		return null;
 	}
