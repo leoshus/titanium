@@ -1,17 +1,19 @@
 package com.sdw.soft.test.web.action;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.NamedThreadLocal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.sdw.soft.core.webservice.proxy.soap.IJaxWsProxy;
+import com.sdw.soft.test.vo.User;
 
 @Controller
 @RequestMapping(value="/hello")
@@ -23,15 +25,20 @@ public class HelloController {
 	@RequestMapping(value="hello")
 	public String hello(HttpServletRequest request,Model model){
 		String message = "";
+		List<User> result = new ArrayList<User>();
 		try {
 			Constants.localConstants.set("test ThreadLocal constants");
 			request.getSession().setAttribute("msg", "test ThreadLocal constants");
 			System.out.println(">>>>>>>>>>>>>>>>>" + Constants.localConstants.get());
 			message = jaxWsProxy.invoke("123");
+			result.add(new User("tom","123",23));
+			result.add(new User("Jhon","456",24));
+			result.add(new User("Rose","789",25));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		model.addAttribute("hello", message);
+//		model.addAttribute("hello", message);
+		model.addAttribute("result", result);
 		return "hello";
 	}
 	/**
