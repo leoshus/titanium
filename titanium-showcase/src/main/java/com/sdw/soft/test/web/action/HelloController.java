@@ -70,4 +70,9 @@ public class HelloController {
 		model.addAttribute("messages", messages);
 		return "hello";
 	}
+	
+	@RequestMapping("/show")
+	public String show(){
+		return "index_show";
+	}
 }
