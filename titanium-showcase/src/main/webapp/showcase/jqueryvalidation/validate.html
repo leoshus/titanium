@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>jQuery.validationEngine plugin Demo</title>
+<link type="text/css" rel="stylesheet"  href="/titanium-showcase/static/css/jquery.validation/validationEngine.jquery.css"/>
+<script type="text/javascript" src="/titanium-showcase/static/js/jquery/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/titanium-showcase/static/js/jquery.validation/jquery.validationEngine-zh_CN.js"></script>
+<script type="text/javascript" src="/titanium-showcase/static/js/jquery.validation/jquery.validationEngine.js"></script>
+<script type="text/javascript">
+	$(function(){
+		var form = "myForm";
+		var condition = [
+		     			{name:"username",rule:"validate[required,maxSize[5]]"} ,                
+		     			{name:"password",rule:"validate[required] text-input"} ,                
+		     			{name:"url",rule:"validate[required,custom[url]]"},           
+		     			{name:"letter",rule:"validate[required,custom[onlyLetterNumber]]"},                
+		     			{name:"date",rule:"validate[required,custom[date]]"}                
+		  ];
+		validationInit(condition,form);
+		$("#sub").click(function(){
+			console.log("validationform="+$("#"+form).validationEngine('validate'));
+			 if($("#"+form).validationEngine()){
+				return;
+			} 
+			myForm.submit();
+		});
+	});
+	
+	function validationInit(condition,form){
+		for(var i = 0; i < condition.length; i++){
+			var cond = condition[i];
+			$("#"+form+" [name="+cond.name+"]").attr("class",cond.rule);
+		}
+		$("#"+form).validationEngine('attach',{
+			
+		}).css({border:"2px solid #000"});
+	}
+</script>
+</head>
+<body>
+<div style="padding-top: 100px">
+	<form action="" id="myForm" name="myForm" method="post">
+		username:<input type="text" name="username" id="username"/><br/>
+		password:<input type="text" name="password" id="password" data-prompt-position="bottomLeft:20px"/><br/>
+		url:<input type="text" id="url" name="url" value="http://"/><br/>
+		only letter:<input type="text" id="letter" name="letter" value="too many spaces obviously"/><br/>
+		date:<input type="text" id="date" name="date" value=""/><br/>
+		<input type="button" value="提交" id="sub"/>
+	</form>
+</div>
+</body>
+</html>
