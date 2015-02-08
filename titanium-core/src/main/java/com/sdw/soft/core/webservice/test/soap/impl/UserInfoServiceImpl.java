@@ -14,7 +14,7 @@ import com.sdw.soft.core.webservice.test.soap.IUserInfoService;
  * @author hp
  *
  */
-@WebService(name="UserInfoService",endpointInterface="com.sdw.soft.core.webservice.test.soap.IUserInfoService")
+@WebService(name="UserInfoService",endpointInterface="com.sdw.soft.core.webservice.test.soap.IUserInfoService",targetNamespace="http://soap.test.webservice.core.soft.sdw.com/")
 public class UserInfoServiceImpl implements IUserInfoService {
 
 	@Override

@@ -14,6 +14,7 @@
 	<http pattern="/hello/**" security="none" />
 	<http pattern="/tws/**" security="none" />
 	<http pattern="/static/**" security="none" />
+	<http pattern="showcase/**" security="none" />
 	<http pattern="/resources/**" security="none" />
 	<http pattern="/components/**" security="none" />
 	
