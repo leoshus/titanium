@@ -43,6 +43,7 @@
 		<joda.time.version>2.2</joda.time.version>
 		<joda.jackson.version>2.1.1</joda.jackson.version>
 		<activemq.version>5.5.1</activemq.version>
+		<jedis.version>2.1.0</jedis.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 	<!-- 设定除中央仓库(repo1.maven.org/maven2/)外的其他仓库,按设定顺序进行查找. -->
@@ -536,6 +537,15 @@
 				<groupId>org.apache.activemq</groupId>
 				<artifactId>activemq-core</artifactId>
 				<version>${activemq.version}</version>
+			</dependency>
+
+			<!-- Jedis -->
+			<dependency>
+				<groupId>redis.clients</groupId>
+				<artifactId>jedis</artifactId>
+				<version>${jedis.version}</version>
+				<type>jar</type>
+				<scope>compile</scope>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
