@@ -44,6 +44,9 @@
 		<joda.jackson.version>2.1.1</joda.jackson.version>
 		<activemq.version>5.5.1</activemq.version>
 		<jedis.version>2.1.0</jedis.version>
+		<hadoop.version>1.2.1</hadoop.version>
+		<zookeeper.version>3.4.6</zookeeper.version>
+		<hbase.version>0.94.20</hbase.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 	<!-- 设定除中央仓库(repo1.maven.org/maven2/)外的其他仓库,按设定顺序进行查找. -->
@@ -546,6 +549,23 @@
 				<version>${jedis.version}</version>
 				<type>jar</type>
 				<scope>compile</scope>
+			</dependency>
+			<!-- BigData -->
+			<dependency>
+				<groupId>org.apache.hadoop</groupId>
+				<artifactId>hadoop-core</artifactId>
+				<version>${hadoop.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.zookeeper</groupId>
+				<artifactId>zookeeper</artifactId>
+				<version>${zookeeper.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.apache.hbase</groupId>
+				<artifactId>hbase</artifactId>
+				<version>${hbase.version}</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
