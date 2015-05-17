@@ -26,6 +26,9 @@ import com.fasterxml.jackson.databind.util.JSONPObject;
  * 
  */
 public class JacksonMapper  extends ObjectMapper{
+	
+	private static final long serialVersionUID = -8479649950265251765L;
+
 	private static final Logger logger = LoggerFactory.getLogger(JacksonMapper.class);
 	
 	private ObjectMapper mapper;

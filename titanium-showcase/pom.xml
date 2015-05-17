@@ -17,6 +17,20 @@
     	<artifactId>titanium-core</artifactId>
     	<version>${titanium.version}</version>
     </dependency>
+    
+    <!-- BigData -->
+			<dependency>
+				<groupId>org.apache.hadoop</groupId>
+				<artifactId>hadoop-core</artifactId>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.zookeeper</groupId>
+				<artifactId>zookeeper</artifactId>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.hbase</groupId>
+				<artifactId>hbase</artifactId>
+			</dependency>
   </dependencies>
   <build>
     <finalName>titanium-showcase</finalName>

@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd">
+	<description>Spring MVC Configuration</description>
+	<!-- 加载配置文件 -->
+	<context:property-placeholder ignore-unresolvable="true" location="classpath*:/application.properties"/>
+	<!-- 使用Annotation自动注册Bean,只扫描@Controller -->
+	<context:component-scan base-package="com.sdw.soft" use-default-filters="false"><!-- base-package 如果多个，用“,”分隔 -->
+		<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+	</context:component-scan>
+	<!-- 默认的注解映射的支持，org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping -->
+	<mvc:annotation-driven content-negotiation-manager="contentNegotiationManager">
+		<mvc:message-converters register-defaults="true">
+			<bean class="org.springframework.http.converter.StringHttpMessageConverter">
+				<constructor-arg value="UTF-8"/>
+			</bean>
+			<!-- 将Jackson2HttpMessageConverter的默认格式化输出为true -->
+			<bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+				<property name="prettyPrint" value="true"/>
+				<property name="objectMapper">
+					<bean class="com.sdw.soft.core.modules.mapper.JacksonMapper"></bean>
+				</property>
+			</bean>
+			<!-- 使用xml格式输出数据
+			<bean class="org.springframework.http.converter.xml.MarshallingHttpMessageConverter">
+				<constructor-arg>
+					<bean class="org.springframework.oxm.xstream.XStreamMarshaller">
+						<property name="streamDriver">
+							<bean class="com.thoughtworks.xstream.io.xml.StaxDriver"/>
+						</property>
+						<property name="annotatedClasses">
+							<list>
+								<value>com.sdw.soft.common.persistence.BaseEntity</value>
+							</list>
+						</property>
+					</bean>
+				</constructor-arg>
+				<property name="supportedMediaTypes" value="application/xml"></property>
+			</bean> -->
+		</mvc:message-converters>
+		<!-- <mvc:argument-resolvers>
+			<bean class="com.sdw.soft.common.web.SecureModelAttributeMethodArgumentResolver">
+				<constructor-arg value="false"/>
+			</bean>
+		</mvc:argument-resolvers> -->
+	</mvc:annotation-driven>
+	<!-- 内容协商管理器 -->
+	<!-- 1.检查路径扩展名eg:hello.json 2.检查请求参数 eg:format=json 3.检查请求头Accept Header-->
+	<bean id="contentNegotiationManager" class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean">
+		<!-- 扩展名MIMEType映射,hello.json ==> application/json -->
+		<property name="favorPathExtension" value="true"/>
+		<!-- 检查请求参数 XXX?format=json -->
+		<property name="favorParameter" value="true"/>
+		<property name="parameterName" value="format"/>
+		<!-- 是否忽略Accept Header -->
+		<property name="ignoreAcceptHeader" value="false"/>
+		<!-- 扩展名到MIMEType的映射 favorPathExtension,favorParameter为true时起作用-->
+		<property name="mediaTypes">
+			<map>
+				<entry key="xml" value="application/xml"/>
+				<entry key="json" value="application/json"/>
+				<entry key="html" value="text/html"/>
+			</map>
+		</property>
+		<!-- 默认contentType -->
+		<property name="defaultContentType" value="text/html"/>
+	</bean>
+	<!-- 内容协商视图解析器；根据客户端的不同的请求决定不同的 view进行响应, 如 /blog/1.json /blog/1.xml -->
+	<bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver" p:order="0">
+		<!-- 内容协商管理器用于决定media type -->
+		<property name="contentNegotiationManager" ref="contentNegotiationManager"/>
+		<!-- 默认视图 放在解析链最后 -->
+		<property name="defaultViews">
+			<list>
+				<bean class="org.springframework.web.servlet.view.json.MappingJackson2JsonView"/>
+				<!-- <bean class="com.alibaba.fastjson.support.spring.FastJsonJsonView"/> -->
+				<!-- <bean class="org.springframework.web.servlet.view.xml.MarshallingView"/> -->
+				
+			</list>
+		</property>
+	</bean>
+	<!-- 视图文件解析配置 -->
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver" p:order="1">
+		<property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
+		<property name="contentType" value="text/html"/>
+		<property name="prefix" value="${web.pages.prefix}"/>
+		<property name="suffix" value="${web.pages.suffix}"/>		
+	</bean>
+	<!-- 模板信息设置 -->  
+   <!-- <bean id="velocityConfigurer"  
+       class="org.springframework.web.servlet.view.velocity.VelocityConfigurer">  
+       <property name="resourceLoaderPath"  value="WEB-INF/views" />設置模板防止位置  
+       <property name="velocityProperties">  
+           <props>  
+               <prop key="directive.foreach.counter.name">loopCounter</prop>  
+               <prop key="directive.foreach.counter.initial.value">0</prop>  
+               <prop key="input.encoding">UTF-8</prop>指定模板引擎进行模板处理的编码  
+               <prop key="output.encoding">UTF-8</prop>指定输出流的编码  
+           </props>  
+       </property>  
+   </bean>  
+	<bean class="com.sdw.soft.core.resolver.MultipleViewResolver">
+		<property name="resolvers">
+			<map>
+				<entry key="jsp">
+					<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+						<property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
+						<property name="contentType" value="text/html"/>
+						<property name="prefix" value="${web.pages.prefix}"/>
+						<property name="suffix" value="${web.pages.suffix}"/>		
+					</bean>
+				</entry>
+				<entry key="vm">
+					<bean class="org.springframework.web.servlet.view.velocity.VelocityViewResolver">      
+                        <property name="contentType" value="text/html;charset=UTF-8" />      
+                          <property name="prefix" value=""/>  
+                         <property name="suffix" value=".vm"/>
+                          避免乱码  
+				       <property name="dateToolAttribute" value="dateTool" />  
+				       <property name="numberToolAttribute" value="numberTool" />  
+				       exposeRequestAttributes：默认值false，设置是否所有的request属性在与模板进行合并之前添加到model中。
+				       （可以理解为request范围内包含的所有对象，而不是一个真正的Request对象。）
+							exposeSessionAttributes：默认值false，设置是否所有的session属性在与模板进行合并之前添加到model中。
+                       <property name="exposeRequestAttributes" value="true" />      
+				       <property name="exposeSessionAttributes" value="true" />  
+                    </bean>     
+				</entry>
+			</map>
+		</property>
+	</bean> -->
+	<!-- 对静态资源文件的访问,将无法mapping到Controller的path交给default servlet handler处理 -->
+	<mvc:default-servlet-handler/>
+	<!-- 定义无Controller的path <->view 直接映射 -->
+	<mvc:view-controller path="/" view-name="redirect:${web.pages.index}"/>
+	<!-- 拦截器配置 -->
+	<!-- <mvc:interceptors>
+		<bean class="com.sdw.soft.modules.sys.interceptor.LogInterceptor"/>
+		<bean id="consumeTime" class="com.sdw.soft.test.interceptor.StopWatchHandlerInterceptor"></bean>
+	</mvc:interceptors> -->
+	
+	<!-- 拦截器配置 
+	<bean id="consumeTime" class="com.sdw.soft.test.interceptor.StopWatchHandlerInterceptor"></bean>
+	<bean class="org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping">
+		<property name="interceptors">
+			<list>
+				<ref bean="consumeTime"/>
+			</list>
+		</property>
+	</bean>-->
+	<!-- 上传文件拦截，设置最大上传文件大小   10M=10*1024*1024(B)=10485760 bytes -->  
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">  
+        <property name="maxUploadSize" value="${web.maxUploadSize}" />  
+    </bean>
+</beans>

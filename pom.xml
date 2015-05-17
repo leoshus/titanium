@@ -10,6 +10,7 @@
 	<modules>
 		<module>titanium-core</module>
 		<module>titanium-showcase</module>
+		<module>titanium-prototype</module>
 	</modules>
 
 	<name>titanium</name>
@@ -19,6 +20,8 @@
 		<titanium.version>1.0.0</titanium.version>
 		<junit.version>4.11</junit.version>
 		<spring.version>3.2.4.RELEASE</spring.version>
+		<mybatis.version>3.2.2</mybatis.version>
+		<mybatis-spring.version>1.1.1</mybatis-spring.version>
 		<springsecurity.version>3.1.4.RELEASE</springsecurity.version>
 		<spring-data-jpa.version>1.2.0.RELEASE</spring-data-jpa.version>
 		<hibernate.version>4.2.0.Final</hibernate.version>
@@ -42,6 +45,8 @@
 		<joda.version>1.2</joda.version>
 		<joda.time.version>2.2</joda.time.version>
 		<joda.jackson.version>2.1.1</joda.jackson.version>
+		<velocity.version>1.7</velocity.version>
+		<velocity.tools.version>2.0</velocity.tools.version>
 		<activemq.version>5.5.1</activemq.version>
 		<jedis.version>2.1.0</jedis.version>
 		<hadoop.version>1.2.1</hadoop.version>
@@ -155,6 +160,17 @@
 				<groupId>org.springframework</groupId>
 				<artifactId>spring-jdbc</artifactId>
 				<version>${spring.version}</version>
+			</dependency>
+			<!-- mybatis -->
+			<dependency>
+				<groupId>org.mybatis</groupId>
+				<artifactId>mybatis</artifactId>
+				<version>${mybatis.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.mybatis</groupId>
+				<artifactId>mybatis-spring</artifactId>
+				<version>${mybatis-spring.version}</version>
 			</dependency>
 			<!-- Spring data jpa -->
 			<dependency>
@@ -535,6 +551,18 @@
 				<artifactId>jackson-datatype-joda</artifactId>
 				<version>${joda.jackson.version}</version>
 			</dependency>
+			
+			<!-- velocity -->
+			 <dependency>
+				   <groupId>org.apache.velocity</groupId>
+				   <artifactId>velocity</artifactId>
+				   <version>${velocity.version}</version>
+			  </dependency>
+			  <dependency>
+				   <groupId>org.apache.velocity</groupId>
+				   <artifactId>velocity-tools</artifactId>
+				   <version>${velocity.tools.version}</version>
+			  </dependency>
 			<!-- ActiveMQ -->
 			<dependency>
 				<groupId>org.apache.activemq</groupId>

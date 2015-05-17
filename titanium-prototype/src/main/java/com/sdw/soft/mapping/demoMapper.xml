@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sdw.soft.demo.dao.UserDao">
+	<resultMap type="com.sdw.soft.demo.vo.Demo" id="demo">
+		<id property="id" column="id"/>
+		<result property="username" column="username"/>
+		<result property="password" column="password"/>
+	</resultMap>
+	<insert id="addUser" parameterType="com.sdw.soft.demo.vo.Demo">
+		insert into demo (id,username,password) values(#{id,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR})
+	</insert>
+</mapper>
