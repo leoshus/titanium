@@ -27,6 +27,7 @@
 		<param-name>contextConfigLocation</param-name>
 		<param-value>
 			classpath*:/context/spring-*.xml,
+			classpath*:/activemq/consumer/activemq-consumer.xml
 		</param-value>
 	</context-param>
 	<context-param>

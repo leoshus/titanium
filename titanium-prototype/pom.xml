@@ -1,119 +1,125 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <parent>
-  	<groupId>com.sdw.soft</groupId>
-  	<artifactId>titanium</artifactId>
-  	<version>1.0.0</version>
-  	<relativePath>..</relativePath>
-  </parent>
-  <artifactId>titanium-prototype</artifactId>
-  <packaging>war</packaging>
-  <version>0.0.1-SNAPSHOT</version>
-  <name>titanium-prototype Maven Webapp</name>
-  <url>http://maven.apache.org</url>
-  
-  <dependencies>
-    <dependency>
-    	<groupId>com.sdw.soft</groupId>
-    	<artifactId>titanium-core</artifactId>
-    	<version>${titanium.version}</version>
-    	<exclusions>
-    		<!-- Spring Security -->
-    		<exclusion>
-    			<groupId>org.springframework.security</groupId>
-    			<artifactId>spring-security-web</artifactId>
-    		</exclusion>
-    		<exclusion>
-    			<groupId>org.springframework.security</groupId>
-				<artifactId>spring-security-config</artifactId>
-    		</exclusion>
-    		<exclusion>
-    			<groupId>org.springframework.security</groupId>
-				<artifactId>spring-security-cas</artifactId>
-    		</exclusion>
-    		<exclusion>
-    			<groupId>org.jasig.cas.client</groupId>
-				<artifactId>cas-client-core</artifactId>
-    		</exclusion>
-    		<exclusion>
-    			<groupId>com.octo.captcha</groupId>
-				<artifactId>jcaptcha</artifactId>
-    		</exclusion>
-    		<exclusion>
-    			<groupId>com.jhlabs</groupId>
-				<artifactId>filters</artifactId>
-    		</exclusion>
-    		<!-- Spring Data Jpa -->
-    		<exclusion>
-    			<groupId>org.springframework.data</groupId>
-				<artifactId>spring-data-jpa</artifactId>
-    		</exclusion>
-    		<!-- Hibernate -->
-    		<exclusion>
-    			<groupId>org.hibernate</groupId>
-				<artifactId>hibernate-core</artifactId>	
-    		</exclusion>
-    		<exclusion>
-    			<groupId>org.hibernate</groupId>
-				<artifactId>hibernate-entitymanager</artifactId>
-    		</exclusion>
-    		<exclusion>
-    			<groupId>org.hibernate</groupId>
-				<artifactId>hibernate-ehcache</artifactId>
-    		</exclusion>
-    		<exclusion>
-    			<groupId>org.hibernate</groupId>
-				<artifactId>hibernate-validator</artifactId>
-    		</exclusion>
-    		<exclusion>
-    			<groupId>org.hibernate</groupId>
-				<artifactId>hibernate-search</artifactId>
-    		</exclusion>
-    		<!-- EHCache -->
-    		<exclusion>
-    			<groupId>net.sf.ehcache</groupId>
-				<artifactId>ehcache-core</artifactId>
-    		</exclusion>
-    		<exclusion>
-    			<groupId>net.sf.ehcache</groupId>
-				<artifactId>ehcache-web</artifactId>
-    		</exclusion>
-    		<!-- SOAP -->
-    		<exclusion>
-    			<groupId>org.apache.cxf</groupId>
-				<artifactId>cxf-rt-core</artifactId>
-    		</exclusion>
-    		<exclusion>
-    			<groupId>org.apache.cxf</groupId>
-				<artifactId>cxf-rt-frontend-jaxws</artifactId>
-    		</exclusion>
-    		<exclusion>
-    			<groupId>org.apache.cxf</groupId>
-				<artifactId>cxf-rt-transports-http</artifactId>
-    		</exclusion>
-    	</exclusions>
-    </dependency>
-    <!-- mybatis -->
-	<dependency>
-		<groupId>org.mybatis</groupId>
-		<artifactId>mybatis</artifactId>
-	</dependency>
-	<dependency>
-		<groupId>org.mybatis</groupId>
-		<artifactId>mybatis-spring</artifactId>
-	</dependency>
-	<!-- velocity -->
-	 <dependency>
-		   <groupId>org.apache.velocity</groupId>
-		   <artifactId>velocity</artifactId>
-	  </dependency>
-	  <dependency>
-		   <groupId>org.apache.velocity</groupId>
-		   <artifactId>velocity-tools</artifactId>
-	  </dependency>
-  </dependencies>
-  <build>
-    <finalName>titanium-prototype</finalName>
-  </build>
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.sdw.soft</groupId>
+		<artifactId>titanium</artifactId>
+		<version>1.0.0</version>
+		<relativePath>..</relativePath>
+	</parent>
+	<artifactId>titanium-prototype</artifactId>
+	<packaging>war</packaging>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>titanium-prototype Maven Webapp</name>
+	<url>http://maven.apache.org</url>
+
+	<dependencies>
+		<dependency>
+			<groupId>com.sdw.soft</groupId>
+			<artifactId>titanium-core</artifactId>
+			<version>${titanium.version}</version>
+			<exclusions>
+				<!-- Spring Security -->
+				<exclusion>
+					<groupId>org.springframework.security</groupId>
+					<artifactId>spring-security-web</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.springframework.security</groupId>
+					<artifactId>spring-security-config</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.springframework.security</groupId>
+					<artifactId>spring-security-cas</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.jasig.cas.client</groupId>
+					<artifactId>cas-client-core</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>com.octo.captcha</groupId>
+					<artifactId>jcaptcha</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>com.jhlabs</groupId>
+					<artifactId>filters</artifactId>
+				</exclusion>
+				<!-- Spring Data Jpa -->
+				<exclusion>
+					<groupId>org.springframework.data</groupId>
+					<artifactId>spring-data-jpa</artifactId>
+				</exclusion>
+				<!-- Hibernate -->
+				<exclusion>
+					<groupId>org.hibernate</groupId>
+					<artifactId>hibernate-core</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.hibernate</groupId>
+					<artifactId>hibernate-entitymanager</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.hibernate</groupId>
+					<artifactId>hibernate-ehcache</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.hibernate</groupId>
+					<artifactId>hibernate-validator</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.hibernate</groupId>
+					<artifactId>hibernate-search</artifactId>
+				</exclusion>
+				<!-- EHCache -->
+				<exclusion>
+					<groupId>net.sf.ehcache</groupId>
+					<artifactId>ehcache-core</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>net.sf.ehcache</groupId>
+					<artifactId>ehcache-web</artifactId>
+				</exclusion>
+				<!-- SOAP -->
+				<exclusion>
+					<groupId>org.apache.cxf</groupId>
+					<artifactId>cxf-rt-core</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.apache.cxf</groupId>
+					<artifactId>cxf-rt-frontend-jaxws</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.apache.cxf</groupId>
+					<artifactId>cxf-rt-transports-http</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<!-- mybatis -->
+		<dependency>
+			<groupId>org.mybatis</groupId>
+			<artifactId>mybatis</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.mybatis</groupId>
+			<artifactId>mybatis-spring</artifactId>
+		</dependency>
+		<!-- velocity -->
+		<dependency>
+			<groupId>org.apache.velocity</groupId>
+			<artifactId>velocity</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.velocity</groupId>
+			<artifactId>velocity-tools</artifactId>
+		</dependency>
+		<!-- Guava -->
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>18.0</version>
+		</dependency>
+	</dependencies>
+	<build>
+		<finalName>titanium-prototype</finalName>
+	</build>
 </project>
